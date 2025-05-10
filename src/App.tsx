@@ -1,6 +1,6 @@
 import "./App.css";
+import { FileTree } from "./components/FileTree";
 import { FileUploader } from "./components/FileUploader";
-import { FolderTree } from "./components/FolderTree";
 import { MonacoEditor } from "./components/MonacoEditor";
 import { useUploadFile } from "./features/useUploadFile";
 
@@ -24,7 +24,7 @@ function App() {
 
           <div className="content_workspace">
             <div className="workspace_tree">
-              <FolderTree zipEntries={zipEntries} />
+              {zipEntries ? <FileTree zipEntries={zipEntries} /> : "File Tree"}
             </div>
             <div className="workspace_editor">
               <div className="editor_tabs">tabs</div>

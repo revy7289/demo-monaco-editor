@@ -1,6 +1,6 @@
 import type { ITreeNode } from "../shared/ITreeNode";
 
-export const FolderTree = ({ zipEntries }: { zipEntries: ITreeNode[] }) => {
+export const FileTree = ({ zipEntries }: { zipEntries: ITreeNode[] }) => {
   const renderTree = (node: ITreeNode) => {
     return (
       <li key={node.path}>
