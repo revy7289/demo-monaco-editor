@@ -1,0 +1,63 @@
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: #343434;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_content {
+  color: #343434;
+  width: 800px;
+  height: 500px;
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.content_uploader {
+  height: 80px;
+  background-color: #faa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content_workspace {
+  display: flex;
+  height: 100%;
+}
+
+.workspace_tree {
+  width: 120px;
+  height: 100%;
+  background-color: #aaf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.workspace_editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.editor_tabs {
+  height: 60px;
+  background-color: #afa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor_view {
+  width: 100%;
+  height: 100%;
+}

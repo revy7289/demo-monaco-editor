@@ -4,10 +4,21 @@ import { MonacoEditor } from "./components/monacoEditor";
 function App() {
   return (
     <>
-      <div>
-        <div>초기셋팅 테스트</div>
-        <div style={{ width: "800px", height: "500px" }}>
-          <MonacoEditor />
+      <div className="main">
+        <div>Zip File Editor</div>
+
+        <div className="main_content">
+          <div className="content_uploader">File Upload Handler</div>
+
+          <div className="content_workspace">
+            <div className="workspace_tree">File Tree</div>
+            <div className="workspace_editor">
+              <div className="editor_tabs">tabs</div>
+              <div className="editor_view">
+                <MonacoEditor />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
