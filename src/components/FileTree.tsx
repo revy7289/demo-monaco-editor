@@ -1,10 +1,18 @@
 import type { ITreeNode } from "../shared/ITreeNode";
 
-export const FileTree = ({ zipEntries }: { zipEntries: ITreeNode[] }) => {
+interface IFileTreeProps {
+  zipEntries: ITreeNode[];
+  handleFileClick: (node: ITreeNode) => void;
+}
+
+export const FileTree = ({ zipEntries, handleFileClick }: IFileTreeProps) => {
   const renderTree = (node: ITreeNode) => {
     return (
       <li key={node.path}>
-        <span style={{ whiteSpace: "nowrap" }}>
+        <span
+          style={{ whiteSpace: "nowrap" }}
+          onClick={() => handleFileClick(node)}
+        >
           {node.type === "folder" ? "📁" : "📄"} {node.name}
         </span>
         {node.children && node.children.length > 0 && (

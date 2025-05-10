@@ -2,11 +2,15 @@ import "./App.css";
 import { FileTree } from "./components/FileTree";
 import { FileUploader } from "./components/FileUploader";
 import { MonacoEditor } from "./components/MonacoEditor";
+import { Tab } from "./components/Tab";
+import { useFileTaps } from "./features/useFileTaps";
 import { useUploadFile } from "./features/useUploadFile";
 
 function App() {
   const { inputRef, fileName, zipEntries, handleInputClick, handleFileChange } =
     useUploadFile();
+
+  const { handleFileClick, setActiveTab, openTabs, activeTab } = useFileTaps();
 
   return (
     <>
@@ -24,10 +28,23 @@ function App() {
 
           <div className="content_workspace">
             <div className="workspace_tree">
-              {zipEntries ? <FileTree zipEntries={zipEntries} /> : "File Tree"}
+              {zipEntries ? (
+                <FileTree
+                  zipEntries={zipEntries}
+                  handleFileClick={handleFileClick}
+                />
+              ) : (
+                "File Tree"
+              )}
             </div>
             <div className="workspace_editor">
-              <div className="editor_tabs">tabs</div>
+              <div className="editor_tabs">
+                <Tab
+                  openTabs={openTabs}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                />
+              </div>
               <div className="editor_view">
                 <MonacoEditor />
               </div>

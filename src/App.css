@@ -28,7 +28,7 @@
   cursor: pointer;
 
   border-radius: 16px;
-  border: 2px solid #fff;
+  border: 2px solid #eee;
   transition: border 0.1s ease-in;
   color: #eee;
 }
@@ -55,7 +55,7 @@
   padding: 8px;
 
   border-radius: 16px;
-  border: 2px solid #fff;
+  border: 2px solid #eee;
   transition: color 0.1s ease-in;
   color: #eee;
 
@@ -65,7 +65,8 @@
   }
 }
 
-.workspace_tree > li:hover {
+.workspace_tree > li > span:hover,
+.workspace_tree > li > ul > li > span:hover {
   color: #8567fe;
   cursor: pointer;
 }
@@ -77,12 +78,34 @@
 }
 
 .editor_tabs {
-  height: 60px;
-  background-color: #afa;
+  /* height: 60px; */
+  /* background-color: #eee; */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  flex-shrink: 0;
+
+  border-radius: 8px 8px 0px 0px;
+  border: 2px solid #eee;
+  border-bottom: none;
+  color: #eee;
+}
+
+.tab {
+  width: 100px;
+  height: 28px;
+  background-color: #565656;
+  padding: 0px 4px;
+  border: 1px solid #222;
+  border-radius: 8px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.active {
+  background-color: #222;
+  border: 2px solid #8567fe;
 }
 
 .editor_view {
