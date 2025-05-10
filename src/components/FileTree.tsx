@@ -4,7 +4,9 @@ export const FileTree = ({ zipEntries }: { zipEntries: ITreeNode[] }) => {
   const renderTree = (node: ITreeNode) => {
     return (
       <li key={node.path}>
-        <span>{node.name}</span>
+        <span style={{ whiteSpace: "nowrap" }}>
+          {node.type === "folder" ? "📁" : "📄"} {node.name}
+        </span>
         {node.children && node.children.length > 0 && (
           <ul>{node.children.map((child) => renderTree(child))}</ul>
         )}
@@ -12,5 +14,5 @@ export const FileTree = ({ zipEntries }: { zipEntries: ITreeNode[] }) => {
     );
   };
 
-  return <ul>{zipEntries.map((node) => renderTree(node))}</ul>;
+  return <>{zipEntries.map((node) => renderTree(node))}</>;
 };

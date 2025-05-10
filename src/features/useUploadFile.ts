@@ -5,7 +5,7 @@ import type { ITreeNode } from "../shared/ITreeNode";
 export const useUploadFile = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState("");
-  const [zipEntries, setZipEntries] = useState<ITreeNode[]>([]);
+  const [zipEntries, setZipEntries] = useState<ITreeNode[]>();
 
   const handleInputClick = () => {
     if (inputRef.current) {
