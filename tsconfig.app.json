@@ -6,6 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true, // ✅ Ts가 대소문자를 구분지을 수 있게 허용
 
     /* Bundler mode */
     "moduleResolution": "bundler",

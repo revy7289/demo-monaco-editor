@@ -12,19 +12,29 @@
   color: #343434;
   width: 800px;
   height: 500px;
-  background-color: #eee;
+  /* background-color: #eee; */
   display: flex;
   flex-direction: column;
   margin: 20px;
+  gap: 10px;
 }
 
 .content_uploader {
   height: 80px;
-  background-color: #faa;
+  /* background-color: #faa; */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  border-radius: 16px;
+  border: 2px solid #fff;
+  transition: border 0.1s ease-in;
+  color: #eee;
+}
+
+.content_uploader:hover {
+  border: 2px solid #6700e6;
 }
 
 .content_workspace {
@@ -55,6 +65,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .editor_view {
