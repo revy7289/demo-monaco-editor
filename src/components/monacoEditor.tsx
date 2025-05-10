@@ -1,27 +1,28 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 export const MonacoEditor: React.FC = () => {
-  const [editor, setEditor] =
-    useState<monaco.editor.IStandaloneCodeEditor | null>(null);
-  const monacoEl = useRef(null);
+  const containerRef = useRef(null);
+  const instanceRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
-    if (monacoEl) {
-      setEditor((editor) => {
-        if (editor) return editor;
+    if (!containerRef.current || instanceRef.current) return;
+    // ✅ div를 ref하지 못하거나 instance를 이미 ref하고 있다면 early exit하여 중복 방지
 
-        return monaco.editor.create(monacoEl.current!, {
-          value: ["function x() {", '\tconsole.log("Hello world!");', "}"].join(
-            "\n"
-          ),
-          language: "typescript",
-        });
-      });
-    }
+    instanceRef.current = monaco.editor.create(containerRef.current, {
+      value: ["function x() {", '\tconsole.log("Hello world!");', "}"].join(
+        "\n"
+      ),
+      language: "typescript",
+    });
 
-    return () => editor?.dispose();
-  }, [monacoEl.current]);
+    return () => {
+      instanceRef.current?.dispose();
+      instanceRef.current = null;
+    };
+  }, []); // ✅ 공배열로 mount 시점 1회 실행
 
-  return <div style={{ width: "100%", height: "100%" }} ref={monacoEl}></div>;
+  return (
+    <div style={{ width: "100%", height: "100%" }} ref={containerRef}></div>
+  );
 };
