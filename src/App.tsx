@@ -1,10 +1,11 @@
 import "./App.css";
+import { FileUploader } from "./components/FileUploader";
+import { FolderTree } from "./components/FolderTree";
 import { MonacoEditor } from "./components/MonacoEditor";
-import { Uploader } from "./components/Uploader";
 import { useUploadFile } from "./features/useUploadFile";
 
 function App() {
-  const { inputRef, fileName, handleInputClick, handleFileChange } =
+  const { inputRef, fileName, zipEntries, handleInputClick, handleFileChange } =
     useUploadFile();
 
   return (
@@ -14,7 +15,7 @@ function App() {
 
         <div className="main_content">
           <div className="content_uploader" onClick={handleInputClick}>
-            <Uploader
+            <FileUploader
               inputRef={inputRef}
               fileName={fileName}
               handleFileChange={handleFileChange}
@@ -22,7 +23,9 @@ function App() {
           </div>
 
           <div className="content_workspace">
-            <div className="workspace_tree">File Tree</div>
+            <div className="workspace_tree">
+              <FolderTree zipEntries={zipEntries} />
+            </div>
             <div className="workspace_editor">
               <div className="editor_tabs">tabs</div>
               <div className="editor_view">

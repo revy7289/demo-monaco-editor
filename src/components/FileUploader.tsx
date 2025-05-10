@@ -13,7 +13,7 @@ interface IUploaderProps {
  * @param handleFileChange 파일을 업로드할 때 호출할 함수입니다.
  * @remarks `handleInputClick` 상위에서 자유롭게 `div에 onClick`으로 전달하여 트리거를 설정합니다.
  */
-export const Uploader = ({
+export const FileUploader = ({
   inputRef,
   fileName,
   handleFileChange,
