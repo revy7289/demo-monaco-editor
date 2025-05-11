@@ -1,11 +1,18 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type Dispatch, type SetStateAction } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import type { ITreeNode } from "../shared/ITreeNode";
 
 interface IMonacoEditorProps {
   content: string;
+  setOpenTabs: Dispatch<SetStateAction<ITreeNode[]>>;
+  activeTab: ITreeNode;
 }
 
-export const MonacoEditor: React.FC<IMonacoEditorProps> = ({ content }) => {
+export const MonacoEditor: React.FC<IMonacoEditorProps> = ({
+  content,
+  setOpenTabs,
+  activeTab,
+}) => {
   // ✅ editor가 instance로 생성되기 때문에 ref로 참조하여 간접적으로 관리
   const containerRef = useRef(null);
   const instanceRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -20,8 +27,23 @@ export const MonacoEditor: React.FC<IMonacoEditorProps> = ({ content }) => {
       language: "typescript",
     });
 
+    const editor = instanceRef.current;
+
+    const model = editor.getModel();
+    const changeListener = editor.onDidChangeModelContent(() => {
+      const newValue = model?.getValue();
+      if (newValue !== undefined) {
+        setOpenTabs((prev) =>
+          prev.map((tab) =>
+            tab.path === activeTab.path ? { ...tab, content: newValue } : tab
+          )
+        );
+      }
+    });
+
     return () => {
-      instanceRef.current?.dispose();
+      changeListener.dispose();
+      editor.dispose();
       instanceRef.current = null;
     };
   }, []); // ✅ 공배열로 mount 시점 1회 실행

@@ -47,6 +47,7 @@ export const useFileTaps = () => {
   return {
     handleFileClick,
     handleTapClick,
+    setOpenTabs,
     openTabs,
     activeTab,
     imageUrl,
