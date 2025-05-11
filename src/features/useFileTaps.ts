@@ -7,6 +7,8 @@ export const useFileTaps = () => {
   const [activeTab, setActiveTab] = useState<ITreeNode | undefined>(undefined);
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
 
+  const { makeZip } = useJSZip();
+
   useEffect(() => {
     if (activeTab?.blob) {
       const url = URL.createObjectURL(activeTab.blob);
@@ -44,7 +46,6 @@ export const useFileTaps = () => {
   };
 
   const handleRezipClick = async () => {
-    const { makeZip } = useJSZip();
     const zipBlob = await makeZip(openTabs);
 
     const url = URL.createObjectURL(zipBlob);

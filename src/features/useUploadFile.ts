@@ -7,6 +7,8 @@ export const useUploadFile = () => {
   const [fileName, setFileName] = useState("");
   const [fileTree, setFileTree] = useState<ITreeNode[]>();
 
+  const { parseZip } = useJSZip();
+
   const handleInputClick = () => {
     if (inputRef.current) {
       inputRef.current.click();
@@ -21,8 +23,6 @@ export const useUploadFile = () => {
       return alert("zip파일만 업로드 가능합니다!");
 
     setFileName(targetFile.name);
-
-    const { parseZip } = useJSZip();
 
     const zipEntries = await parseZip(targetFile);
     setFileTree(zipEntries);
