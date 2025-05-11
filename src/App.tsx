@@ -37,7 +37,7 @@ function App() {
     useUploadFile();
 
   // ✅ file-tree에서 특정한 파일을 선택하면 tab-bar로 만들고 현재 선택중인 파일을 관리하는 역할
-  const { handleFileClick, setActiveTab, openTabs, activeTab, imageUrl } =
+  const { handleFileClick, handleTapClick, openTabs, activeTab, imageUrl } =
     useFileTaps();
 
   return (
@@ -70,7 +70,7 @@ function App() {
                 <Tab
                   openTabs={openTabs}
                   activeTab={activeTab}
-                  setActiveTab={setActiveTab}
+                  handleTapClick={handleTapClick}
                 />
               </div>
               <div className="editor_view">

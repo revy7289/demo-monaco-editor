@@ -30,5 +30,25 @@ export const useFileTaps = () => {
     setActiveTab(file);
   };
 
-  return { handleFileClick, setActiveTab, openTabs, activeTab, imageUrl };
+  const handleTapClick = (selectedTab: ITreeNode) => {
+    if (selectedTab.path === activeTab?.path) {
+      // ✅ 중복 클릭하면 탭 닫기
+      const newTabs = openTabs.filter((tab) => tab.path !== selectedTab.path);
+      setOpenTabs(newTabs);
+
+      // 🔁 activeTab 변경 (탭이 사라졌으니 이전 탭을 active로)
+      const lastTab = newTabs[newTabs.length - 1];
+      setActiveTab(lastTab);
+    }
+    // ✅ 다른 탭 클릭하면 activeTab만 변경
+    setActiveTab(selectedTab);
+  };
+
+  return {
+    handleFileClick,
+    handleTapClick,
+    openTabs,
+    activeTab,
+    imageUrl,
+  };
 };

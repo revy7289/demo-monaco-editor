@@ -111,6 +111,16 @@
 .active {
   background-color: #222;
   border: 2px solid #8567fe;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.active::after {
+  content: "X";
+  color: #f55;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .editor_view {
