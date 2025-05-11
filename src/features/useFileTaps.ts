@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ITreeNode } from "../shared/ITreeNode";
 
 export const useFileTaps = () => {
   const [openTabs, setOpenTabs] = useState<ITreeNode[]>([]);
   const [activeTab, setActiveTab] = useState<ITreeNode>();
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (activeTab?.blob) {
+      const url = URL.createObjectURL(activeTab.blob);
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setImageUrl(undefined);
+    }
+  }, [activeTab?.blob]);
 
   const handleFileClick = (file: ITreeNode) => {
     if (file.type === "folder") return;
@@ -19,5 +30,5 @@ export const useFileTaps = () => {
     setActiveTab(file);
   };
 
-  return { handleFileClick, setActiveTab, openTabs, activeTab };
+  return { handleFileClick, setActiveTab, openTabs, activeTab, imageUrl };
 };

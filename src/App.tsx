@@ -37,7 +37,8 @@ function App() {
     useUploadFile();
 
   // ✅ file-tree에서 특정한 파일을 선택하면 tab-bar로 만들고 현재 선택중인 파일을 관리하는 역할
-  const { handleFileClick, setActiveTab, openTabs, activeTab } = useFileTaps();
+  const { handleFileClick, setActiveTab, openTabs, activeTab, imageUrl } =
+    useFileTaps();
 
   return (
     <>
@@ -73,10 +74,14 @@ function App() {
                 />
               </div>
               <div className="editor_view">
-                {activeTab ? (
-                  <MonacoEditor content={String(activeTab.content)} />
+                {activeTab?.blob ? <img src={imageUrl} /> : null}
+                {activeTab?.content ? (
+                  <MonacoEditor
+                    key={activeTab.path}
+                    content={activeTab.content}
+                  />
                 ) : (
-                  <div className="view_null">no contents</div>
+                  <div className="view_null"> no contents</div>
                 )}
               </div>
             </div>

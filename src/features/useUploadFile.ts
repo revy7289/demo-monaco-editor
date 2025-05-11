@@ -26,5 +26,9 @@ export const useUploadFile = () => {
     setFileTree(zipEntries);
   };
 
+  // const arrayBuffer = await targetFile.arrayBuffer();
+  // const rootEntries = await useParser(arrayBuffer);
+  // setZipEntries(rootEntries);
+
   return { inputRef, fileName, fileTree, handleInputClick, handleFileChange };
 };
