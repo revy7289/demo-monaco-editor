@@ -4,7 +4,7 @@ import { useJSZip } from "./useJSZip";
 
 export const useFileTaps = () => {
   const [openTabs, setOpenTabs] = useState<ITreeNode[]>([]);
-  const [activeTab, setActiveTab] = useState<ITreeNode>();
+  const [activeTab, setActiveTab] = useState<ITreeNode | undefined>(undefined);
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -36,13 +36,11 @@ export const useFileTaps = () => {
       // ✅ 중복 클릭하면 탭 닫기
       const newTabs = openTabs.filter((tab) => tab.path !== selectedTab.path);
       setOpenTabs(newTabs);
-
-      // 🔁 activeTab 변경 (탭이 사라졌으니 이전 탭을 active로)
-      const lastTab = newTabs[newTabs.length - 1];
-      setActiveTab(lastTab);
+      setActiveTab(undefined);
+    } else {
+      // ✅ 다른 탭 클릭하면 activeTab만 변경
+      setActiveTab(selectedTab);
     }
-    // ✅ 다른 탭 클릭하면 activeTab만 변경
-    setActiveTab(selectedTab);
   };
 
   const handleRezipClick = async () => {
