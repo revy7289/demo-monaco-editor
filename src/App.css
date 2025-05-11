@@ -75,28 +75,35 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: hidden;
 }
 
 .editor_tabs {
   /* height: 60px; */
   /* background-color: #eee; */
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-  border-radius: 8px 8px 0px 0px;
-  border: 2px solid #eee;
-  border-bottom: none;
   color: #eee;
+  gap: 2px;
+  padding-bottom: 4px;
+  /* margin-bottom: 4px; */
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
 }
 
 .tab {
-  width: 100px;
+  min-width: 60px;
+  max-width: 120px;
+  flex-shrink: 0;
   height: 28px;
   background-color: #565656;
   padding: 0px 4px;
-  border: 1px solid #222;
   border-radius: 8px;
+  font-size: 14px;
 
   overflow: hidden;
   text-overflow: ellipsis;
