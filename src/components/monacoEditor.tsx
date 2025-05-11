@@ -6,6 +6,7 @@ interface IMonacoEditorProps {
 }
 
 export const MonacoEditor: React.FC<IMonacoEditorProps> = ({ content }) => {
+  // ✅ editor가 instance로 생성되기 때문에 ref로 참조하여 간접적으로 관리
   const containerRef = useRef(null);
   const instanceRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 

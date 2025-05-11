@@ -1,11 +1,11 @@
 import { useRef, useState, type ChangeEvent } from "react";
-import { useParser } from "./useParser";
 import type { ITreeNode } from "../shared/ITreeNode";
+import { useJSZip } from "./useJSZip";
 
 export const useUploadFile = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState("");
-  const [zipEntries, setZipEntries] = useState<ITreeNode[]>();
+  const [fileTree, setFileTree] = useState<ITreeNode[]>();
 
   const handleInputClick = () => {
     if (inputRef.current) {
@@ -22,18 +22,9 @@ export const useUploadFile = () => {
 
     setFileName(targetFile.name);
 
-    const arrayBuffer = await targetFile.arrayBuffer();
-    try {
-      const rootEntries = await useParser(arrayBuffer);
-      // const nonSystemFiles = rootEntries.filter(
-      //   (file) => !file.path.startsWith(".") && !file.path.startsWith("_")
-      // );
-
-      setZipEntries(rootEntries);
-    } catch (error) {
-      alert(".zip파일 분석 중 오류 발생:" + error);
-    }
+    const zipEntries = await useJSZip(targetFile);
+    setFileTree(zipEntries);
   };
 
-  return { inputRef, fileName, zipEntries, handleInputClick, handleFileChange };
+  return { inputRef, fileName, fileTree, handleInputClick, handleFileChange };
 };

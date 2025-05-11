@@ -7,7 +7,8 @@ export const useFileTaps = () => {
 
   const handleFileClick = (file: ITreeNode) => {
     if (file.type === "folder") return;
-    if (file.isEditable === false) return alert("수정할 수 없는 파일입니다!");
+    if (file.isText === false && file.isImage === false)
+      return alert("수정할 수 없는 파일입니다!");
 
     setOpenTabs((prev) => {
       const alreadyOpen = prev.find((tab) => tab.path === file.path);

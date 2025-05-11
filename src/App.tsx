@@ -32,14 +32,12 @@ function App() {
     };
   }, []);
 
-  const { inputRef, fileName, zipEntries, handleInputClick, handleFileChange } =
+  // ✅ 파일을 업로드하고, 업로드된 zip파일을 분석하여 file-tree를 구성하는 역할
+  const { inputRef, fileName, fileTree, handleInputClick, handleFileChange } =
     useUploadFile();
 
+  // ✅ file-tree에서 특정한 파일을 선택하면 tab-bar로 만들고 현재 선택중인 파일을 관리하는 역할
   const { handleFileClick, setActiveTab, openTabs, activeTab } = useFileTaps();
-
-  if (activeTab) {
-    console.log(activeTab.content);
-  }
 
   return (
     <>
@@ -57,9 +55,9 @@ function App() {
 
           <div className="content_workspace">
             <div className="workspace_tree">
-              {zipEntries ? (
+              {fileTree ? (
                 <FileTree
-                  zipEntries={zipEntries}
+                  fileTree={fileTree}
                   handleFileClick={handleFileClick}
                 />
               ) : (

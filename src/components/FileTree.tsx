@@ -1,11 +1,12 @@
 import type { ITreeNode } from "../shared/ITreeNode";
 
 interface IFileTreeProps {
-  zipEntries: ITreeNode[];
+  fileTree: ITreeNode[];
   handleFileClick: (node: ITreeNode) => void;
 }
 
-export const FileTree = ({ zipEntries, handleFileClick }: IFileTreeProps) => {
+export const FileTree = ({ fileTree, handleFileClick }: IFileTreeProps) => {
+  // ✅ 파일의 유형에 따라 아이콘 부여
   const getFileIcon = (node: ITreeNode): string => {
     switch (true) {
       case node.type === "folder":
@@ -19,6 +20,7 @@ export const FileTree = ({ zipEntries, handleFileClick }: IFileTreeProps) => {
     }
   };
 
+  // ✅ 폴더 트리를 재귀적으로 순환하여 네스팅된 파일트리 구조 형성
   const renderTree = (node: ITreeNode) => {
     return (
       <li key={node.path}>
@@ -35,5 +37,5 @@ export const FileTree = ({ zipEntries, handleFileClick }: IFileTreeProps) => {
     );
   };
 
-  return <>{zipEntries.map((node) => renderTree(node))}</>;
+  return <>{fileTree.map((node) => renderTree(node))}</>;
 };
