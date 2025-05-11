@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ITreeNode } from "../shared/ITreeNode";
+import { useJSZip } from "./useJSZip";
 
 export const useFileTaps = () => {
   const [openTabs, setOpenTabs] = useState<ITreeNode[]>([]);
@@ -44,9 +45,23 @@ export const useFileTaps = () => {
     setActiveTab(selectedTab);
   };
 
+  const handleRezipClick = async () => {
+    const { makeZip } = useJSZip();
+    const zipBlob = await makeZip(openTabs);
+
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "edited.zip";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  };
+
   return {
     handleFileClick,
     handleTapClick,
+    handleRezipClick,
     setOpenTabs,
     openTabs,
     activeTab,

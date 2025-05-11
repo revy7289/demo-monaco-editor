@@ -40,6 +40,7 @@ function App() {
   const {
     handleFileClick,
     handleTapClick,
+    handleRezipClick,
     setOpenTabs,
     openTabs,
     activeTab,
@@ -77,6 +78,7 @@ function App() {
                   openTabs={openTabs}
                   activeTab={activeTab}
                   handleTapClick={handleTapClick}
+                  handleRezipClick={handleRezipClick}
                 />
               </div>
               <div className="editor_view">

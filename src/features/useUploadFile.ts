@@ -22,7 +22,9 @@ export const useUploadFile = () => {
 
     setFileName(targetFile.name);
 
-    const zipEntries = await useJSZip(targetFile);
+    const { parseZip } = useJSZip();
+
+    const zipEntries = await parseZip(targetFile);
     setFileTree(zipEntries);
   };
 

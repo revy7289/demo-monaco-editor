@@ -81,16 +81,20 @@
 .editor_tabs {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   color: #eee;
-  gap: 2px;
   padding-bottom: 8px;
 
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   scrollbar-width: thin;
+}
+
+.tab_bar {
+  display: flex;
+  gap: 2px;
 }
 
 .tab {
@@ -106,6 +110,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .active {
@@ -121,6 +128,15 @@
   color: #f55;
   font-size: 12px;
   font-weight: bold;
+}
+
+.downloader {
+  height: 28px;
+  background-color: #eee;
+  color: #f55;
+  font-weight: bold;
+  padding: 0px 4px;
+  border-radius: 8px 0px 8px 0px;
 }
 
 .editor_view {
