@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 import { FileTree } from "./components/FileTree";
 import { FileUploader } from "./components/FileUploader";
@@ -7,6 +8,30 @@ import { useFileTaps } from "./features/useFileTaps";
 import { useUploadFile } from "./features/useUploadFile";
 
 function App() {
+  // ✅ 세로 스크롤을 가로 스크롤로 전환하는 효과
+  useEffect(() => {
+    const elements = [
+      document.querySelector(".editor_tabs"),
+      document.querySelector(".workspace_tree"),
+    ].filter((el): el is HTMLElement => el !== null); // 타입 가드
+
+    const onWheel = (e: Event) => {
+      const wheelEvent = e as WheelEvent;
+      if (wheelEvent.deltaY !== 0) {
+        e.preventDefault();
+        (e.currentTarget as HTMLElement).scrollLeft += wheelEvent.deltaY;
+      }
+    };
+
+    elements.forEach((el) =>
+      el.addEventListener("wheel", onWheel, { passive: false })
+    );
+
+    return () => {
+      elements.forEach((el) => el.removeEventListener("wheel", onWheel));
+    };
+  }, []);
+
   const { inputRef, fileName, zipEntries, handleInputClick, handleFileChange } =
     useUploadFile();
 
@@ -46,7 +71,11 @@ function App() {
                 />
               </div>
               <div className="editor_view">
-                <MonacoEditor />
+                {activeTab ? (
+                  <MonacoEditor />
+                ) : (
+                  <div className="view_null">no contents</div>
+                )}
               </div>
             </div>
           </div>
