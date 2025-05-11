@@ -24,12 +24,12 @@ export const useUploadFile = () => {
 
     const arrayBuffer = await targetFile.arrayBuffer();
     try {
-      const rootEntries = useParser(arrayBuffer);
-      const nonSystemFiles = rootEntries.filter(
-        (file) => !file.path.startsWith(".") && !file.path.startsWith("_")
-      );
+      const rootEntries = await useParser(arrayBuffer);
+      // const nonSystemFiles = rootEntries.filter(
+      //   (file) => !file.path.startsWith(".") && !file.path.startsWith("_")
+      // );
 
-      setZipEntries(nonSystemFiles);
+      setZipEntries(rootEntries);
     } catch (error) {
       alert(".zip파일 분석 중 오류 발생:" + error);
     }

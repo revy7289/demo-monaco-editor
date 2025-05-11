@@ -37,6 +37,10 @@ function App() {
 
   const { handleFileClick, setActiveTab, openTabs, activeTab } = useFileTaps();
 
+  if (activeTab) {
+    console.log(activeTab.content);
+  }
+
   return (
     <>
       <div className="main">
@@ -72,7 +76,7 @@ function App() {
               </div>
               <div className="editor_view">
                 {activeTab ? (
-                  <MonacoEditor />
+                  <MonacoEditor content={String(activeTab.content)} />
                 ) : (
                   <div className="view_null">no contents</div>
                 )}

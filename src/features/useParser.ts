@@ -1,6 +1,6 @@
 import type { ITreeNode } from "../shared/ITreeNode";
 
-export const useParser = (buffer: ArrayBuffer): ITreeNode[] => {
+export const useParser = async (buffer: ArrayBuffer): Promise<ITreeNode[]> => {
   const view = new DataView(buffer);
   const byteArray = new Uint8Array(buffer);
 
@@ -46,7 +46,7 @@ export const useParser = (buffer: ArrayBuffer): ITreeNode[] => {
           offset: entry.offset,
           compressedSize: entry.compressedSize,
           uncompressedSize: entry.uncompressedSize,
-          ...(isLeaf ? {} : { children: [] }),
+          ...(isLeaf ? { content: entry.content } : { children: [] }), // content 추가
         };
         currentLevel.push(existing);
       }
@@ -56,6 +56,47 @@ export const useParser = (buffer: ArrayBuffer): ITreeNode[] => {
         currentLevel = existing.children;
       }
     }
+  };
+
+  const loadFileContent = async (file: ITreeNode, buffer: ArrayBuffer) => {
+    if (file.isText) {
+      // 텍스트 파일 처리
+      const fileData = await fetchFileData(
+        file.offset,
+        file.uncompressedSize,
+        buffer
+      );
+      return new TextDecoder().decode(fileData);
+    }
+
+    if (file.isImage) {
+      // 이미지 파일 처리
+      const fileData = await fetchFileData(
+        file.offset,
+        file.uncompressedSize,
+        buffer
+      );
+      return URL.createObjectURL(new Blob([fileData]));
+    }
+
+    return null;
+  };
+
+  const fetchFileData = (
+    offset: number,
+    size: number,
+    buffer: ArrayBuffer
+  ): Promise<Uint8Array> => {
+    // 버퍼 크기 체크
+    if (offset + size > buffer.byteLength) {
+      throw new Error("Attempt to read beyond the end of the ArrayBuffer");
+    }
+
+    // 지정된 범위로 Uint8Array 생성
+    return new Promise((resolve) => {
+      const byteArray = new Uint8Array(buffer.slice(offset, offset + size));
+      resolve(byteArray);
+    });
   };
 
   while (view.getUint32(offset, true) === CEN_SIGNATURE) {
@@ -91,7 +132,13 @@ export const useParser = (buffer: ArrayBuffer): ITreeNode[] => {
       offset: localHeaderOffset,
       compressedSize,
       uncompressedSize,
+      content: null, // 내용은 처음에는 null로 설정
     };
+
+    // 텍스트나 이미지 파일인 경우 content를 채우기
+    if (entry.isText || entry.isImage) {
+      entry.content = await loadFileContent(entry, buffer);
+    }
 
     insertToTree(root, entry);
 

@@ -10,4 +10,5 @@ export interface ITreeNode {
   compressedSize: number;
   uncompressedSize: number;
   children?: ITreeNode[];
+  content?: string | Blob | null;
 }
